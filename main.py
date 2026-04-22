@@ -1,6 +1,6 @@
-# Press Ctrl+F5 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import sys
+import os
+import subprocess
 
 from penny import Penny
 import pathlib
@@ -16,6 +16,12 @@ def find_bool_arg(arg_names: tuple[str, str]) -> bool:
             return True
     return False
 
+def cls() -> None:
+    if os.name == 'nt':  # For Windows
+        subprocess.run(['cmd', '/c', 'cls'])
+    else:  # For Linux and macOS
+        subprocess.run(['clear'])
+
 FLAG_USE_DEFAULT_CONFIG = ('d', 'default')
 
 def run():
@@ -28,14 +34,14 @@ def run():
     # Read the input file
     with pathlib.Path(sys.argv[1]).open('r') as file:
         p.read(file.readlines())
-    print()
+    cls()
 
     for card in p.shuffled():
         print(card.front, end="")
         _ = input()
         print(card.back, end="")
         _ = input()
-        print()
+        cls()
 
     print("*** Session Complete ***")
 
