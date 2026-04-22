@@ -41,5 +41,11 @@ to feel bittersweet/poignant
 To run a session that randomly shuffles and exhausts every flashcard in a deck, run:
 
 ```
-python3 <flashcard_file_name>
+python3 main.py <flashcard_file_name>
+```
+
+To run a session with reversed cards (i.e. you have to guess the front given the back), you can use the optional `r`/`reverse` argument:
+
+```
+python3 main.py <flashcard_file_name> r
 ```

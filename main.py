@@ -23,9 +23,16 @@ def cls() -> None:
         subprocess.run(['clear'])
 
 FLAG_USE_DEFAULT_CONFIG = ('d', 'default')
+FLAG_REVERSE = ('r', 'reverse')
+INPUT_QUIT = ('q', 'quit', 'exit')
+
+class RunConfiguration:
+    def __init__(self):
+        self.reversed = False
 
 def run():
     p = Penny()
+    conf = RunConfiguration()
 
     if not find_bool_arg(FLAG_USE_DEFAULT_CONFIG):
         # Try reading the config file
@@ -36,11 +43,15 @@ def run():
         p.read(file.readlines())
     cls()
 
+    conf.reversed = sys.argv[2] in FLAG_REVERSE
+
     for card in p.shuffled():
-        print(card.front, end="")
-        _ = input()
-        print(card.back, end="")
-        _ = input()
+        print(card.front if not conf.reversed else card.back, end="")
+        inp = input()
+        if inp in INPUT_QUIT: break
+        print(card.back if not conf.reversed else card.front, end="")
+        inp = input()
+        if inp in INPUT_QUIT: break
         cls()
 
     print("*** Session Complete ***")
